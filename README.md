@@ -1,6 +1,6 @@
 # Unscreensaver
 
-Unsplash API Screensaver
+Unsplash API Screensaver for Linux
 
 - Dependancies per system
 ``` 
@@ -25,13 +25,14 @@ $ g++ *.cpp -o screensaver -I./include \
 -lyaml-cpp \
 -lexiv2
 ```
-- Executing command
+- Targeted executing options (Currently not finished)
 ```
 ./screensaver                 # Black background (default)
-./screensaver --info          # Display information on screen
-./screensaver --help          # Help menu
-./screensaver --colour Red    # Red background
-./screensaver --color Blue    # Blue background
+./screensaver --info          # GUI Display help info on screen
+./screensaver --help          # CLI Display help info on command
+./screensaver --setup         # Create / Update config.yml
+./screensaver --colour Black  # Black background
+./screensaver --color Black   # The same as --colour
 
-Press ESC to exit the screensaver
+Press ESC or "Q" to exit the Unscreensaver
 ```
