@@ -2,8 +2,11 @@
 #include <string>
 #include <curl/curl.h>
 #include <fstream>
+#include <filesystem>
 #include "readconfig.hpp"
 #include <nlohmann/json.hpp>
+
+namespace fs = std::filesystem;
 
 // Callback function to handle the data received from the server
 size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp) {
@@ -24,9 +27,6 @@ void downloadImageFromUnsplash() {
     // Construct the URL
     std::string url = "https://api.unsplash.com/photos/random?query=" + config.searchPattern + "&client_id=" + config.accessKey;
 
-    // Print the URL
-    // std::cout << "Constructed URL: " << url << std::endl;
-
     // Initialize CURL
     CURL* curl;
     CURLcode res;
@@ -46,19 +46,22 @@ void downloadImageFromUnsplash() {
     }
     curl_global_cleanup();
 
-    // Print the response
-    //std::cout << "Response: " << readBuffer << std::endl;
-
     // Parse the JSON response
     auto jsonResponse = nlohmann::json::parse(readBuffer);
     std::string imageId = jsonResponse["id"];
     std::string imageUrl = jsonResponse["urls"]["small"];
 
-    // Print the image URL
-    //std::cout << "Image URL: " << imageUrl << std::endl;
-
     // Construct the image path
-    std::string imagePath = config.folderPath + "/" + imageId + ".jpg";
+    std::string folderPath = config.folderPath + "/" + config.searchPattern;
+    std::string imagePath = folderPath + "/" + imageId + ".jpg";
+
+    // Check if the folder exists, if not create it
+    if (!fs::exists(folderPath)) {
+        for (const auto& entry : fs::directory_iterator(config.folderPath)) {
+            fs::remove_all(entry.path());
+        }
+        fs::create_directories(folderPath);
+    }
 
     // Check if the file already exists
     std::ifstream file(imagePath);
@@ -70,7 +73,6 @@ void downloadImageFromUnsplash() {
     // Download the image
     curl = curl_easy_init();
     if(curl) {
-        std::string imagePath = config.folderPath + "/" + imageId + ".jpg";
         FILE* fp = fopen(imagePath.c_str(), "wb");
         curl_easy_setopt(curl, CURLOPT_URL, imageUrl.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteFileCallback);
