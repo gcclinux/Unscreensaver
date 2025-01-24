@@ -4,13 +4,23 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <pwd.h>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 std::string getHomeFolder() {
     const char *homedir;
     if ((homedir = getenv("HOME")) == NULL) {
         homedir = getpwuid(getuid())->pw_dir;
     }
-    return std::string(homedir) + "/Pictures";
+    std::string folderPath = std::string(homedir) + "/Unscreensaver";
+
+    // Check if the folder exists, if not create it
+    if (!fs::exists(folderPath)) {
+        fs::create_directories(folderPath);
+    }
+
+    return folderPath;
 }
 
 UnScreenSaverConfig getConfigFromYaml() {
