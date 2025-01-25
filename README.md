@@ -29,8 +29,8 @@ $ sudo pacman -S sfml yaml-cpp exiv2 curl nlohmann-json
 
 - Compile main.cpp, help.cpp, readconfig.cpp program
 ```
-$ g++ *.cpp -o screensaver -I./include \
--I/usr/include/nlohmann
+$ g++ -o screensaver *.cpp -I./include \
+-I/usr/include/nlohmann \
 -lsfml-graphics \
 -lsfml-window \
 -lsfml-system \
