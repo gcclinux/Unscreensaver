@@ -1,5 +1,5 @@
-#include "checkkey.hpp"
-#include "readconfig.hpp"
+#include "headers/checkkey.hpp"
+#include "headers/readconfig.hpp"
 #include <cctype>
 #include <iostream>
 

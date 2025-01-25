@@ -3,7 +3,7 @@
 #include <curl/curl.h>
 #include <fstream>
 #include <filesystem>
-#include "readconfig.hpp"
+#include "headers/readconfig.hpp"
 #include <nlohmann/json.hpp>
 
 namespace fs = std::filesystem;

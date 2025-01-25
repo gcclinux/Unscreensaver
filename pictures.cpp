@@ -1,5 +1,5 @@
-#include "pictures.hpp"
-#include "readconfig.hpp"
+#include "headers/pictures.hpp"
+#include "headers/readconfig.hpp"
 #include <SFML/Graphics.hpp>
 #include <exiv2/exiv2.hpp>
 #include <iostream>

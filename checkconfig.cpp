@@ -1,4 +1,4 @@
-#include "checkconfig.hpp"
+#include "headers/checkconfig.hpp"
 #include <iostream>
 #include <filesystem>
 #include <yaml-cpp/yaml.h>

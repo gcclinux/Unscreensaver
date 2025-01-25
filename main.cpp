@@ -1,14 +1,14 @@
-#include "caching.hpp"
-#include "checkkey.hpp"
-#include "checkconfig.hpp"
-#include "render.hpp"
-#include "readconfig.hpp"
-#include "background.hpp"
+#include "headers/caching.hpp"
+#include "headers/checkkey.hpp"
+#include "headers/checkconfig.hpp"
+#include "headers/render.hpp"
+#include "headers/readconfig.hpp"
+#include "headers/background.hpp"
 #include <iostream>
 #include <filesystem>
 #include <thread>
 #include <chrono>
-#include "help.hpp"
+#include "headers/help.hpp"
 
 namespace fs = std::filesystem;
 

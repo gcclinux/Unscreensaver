@@ -4,11 +4,11 @@
 #include <sstream>
 #include <vector>
 #include <filesystem>
-#include <cstdlib> // For rand() and srand()
-#include <ctime>   // For time()
-#include "help.hpp"
-#include "readconfig.hpp"
-#include "pictures.hpp" // Include the new header file
+#include <cstdlib> 
+#include <ctime> 
+#include "headers/help.hpp"
+#include "headers/readconfig.hpp"
+#include "headers/pictures.hpp" 
 #include <unordered_set>
 
 namespace fs = std::filesystem;

@@ -1,9 +1,9 @@
-#include "help.hpp"
+#include "headers/help.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
 #include <map>
-#include "colormap.hpp"
+#include "headers/colormap.hpp"
 
 std::string getHelpText() {
     std::stringstream helpText;

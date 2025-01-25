@@ -1,6 +1,6 @@
-#include "background.hpp"
-#include "caching.hpp"
-#include "checkkey.hpp"
+#include "headers/background.hpp"
+#include "headers/caching.hpp"
+#include "headers/checkkey.hpp"
 #include <iostream>
 #include <filesystem>
 #include <thread>
