@@ -66,7 +66,7 @@ void downloadImageFromUnsplash() {
     // Check if the file already exists
     std::ifstream file(imagePath);
     if (file.good()) {
-        std::cout << "File already exists: " << imagePath << std::endl;
+        //std::cout << "File already exists: " << imagePath << std::endl;
         return;
     }
 
