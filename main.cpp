@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <thread>
 #include <chrono>
+#include "help.hpp"
 
 namespace fs = std::filesystem;
 
@@ -16,6 +17,15 @@ void renderLoop(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
+    // Check if args are valid --help or --colour or --setup else exit with invalid args
+    if (argc > 1) {
+        std::string arg = argv[1];
+        if (arg != "--help" && arg != "--colour" && arg != "--color" && arg != "--setup") {
+            std::cout << getHelpText();
+            return 1;
+        } 
+    }
+
     // Check if the config file exists
     if (!isConfigFileExists()) {
         return 1;

@@ -76,26 +76,11 @@ int RenderImage(int argc, char* argv[]) {
     sf::Color backgroundColor = sf::Color::Black;
     bool showInfo = false;
 
-    sf::Font font;
-    if (!font.loadFromFile("./fonts/LiberationMono-Regular.ttf")) {
-        std::cerr << "Error loading font\n";
-        return -1;
-    }
-
-    sf::Text infoText;
-    infoText.setFont(font);
-    infoText.setCharacterSize(24);
-
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
         if (arg == "--help") {
             std::cout << getHelpText();
             return 0;
-        }
-        if (arg == "--info") {
-            showInfo = true;
-            backgroundColor = sf::Color::Yellow; //Background Colour
-            infoText.setFillColor(sf::Color::Black); // Set font color to black
         }
         if ((arg == "--colour" || arg == "--color") && i + 1 < argc) {
             backgroundColor = getColorFromString(argv[i + 1]);
@@ -107,17 +92,6 @@ int RenderImage(int argc, char* argv[]) {
 
     float padding = 20.0f;
     float lineSpacing = 30.0f;
-
-    std::stringstream ss;
-    ss << getHelpText() << "\n"; // Add help information at the top
-    ss << "Screen Dimentions       : " << window.getSize().x << "x" << window.getSize().y << "\n"
-       << "Total images to show    : " << imgConfig.quantify << "\n"
-       << "Images size to display  : " << imgConfig.width << "x" << imgConfig.height << "\n"
-       << "Images Folder           : " << imgConfig.folderPath << "\n"
-       << "Seconds between images  : " << imgConfig.duration << "\n";
-    
-    infoText.setString(ss.str());
-    infoText.setPosition(window.getSize().x - infoText.getGlobalBounds().width - padding, padding);
 
     std::vector<sf::RectangleShape> images;
     sf::Clock clock;
@@ -160,14 +134,11 @@ int RenderImage(int argc, char* argv[]) {
         }
 
         window.clear(backgroundColor);
-        if (showInfo) {
-            infoText.setFillColor(getContrastingColor(backgroundColor));
-            window.draw(infoText);
-        } else {
-            for (const auto& image : images) {
-                window.draw(image);
-            }
+
+        for (const auto& image : images) {
+            window.draw(image);
         }
+        
         window.display();
     }
 

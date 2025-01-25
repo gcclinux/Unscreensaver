@@ -10,7 +10,6 @@ std::string getHelpText() {
     helpText << "Usage: ./screensaver [OPTIONS]\n\n"
              << "Options:\n"
              << "  --help                Show this help message\n"
-             << "  --info                Display information on screen\n"
              << "  --colour COLOR        Set background color (default: Black)\n"
              << "  --color COLOR         Same as --colour\n\n"
              << "\nAvailable colors:\n";
