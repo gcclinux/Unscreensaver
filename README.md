@@ -27,16 +27,13 @@ nlohmann-json-devel
 $ sudo pacman -S sfml yaml-cpp exiv2 curl nlohmann-json
 ```
 
-- Compile main.cpp, help.cpp, readconfig.cpp program
+- Compile unscreensaver
 ```
-$ g++ -o unscreensaver *.cpp -I./include \
--I/usr/include/nlohmann \
--lsfml-graphics \
--lsfml-window \
--lsfml-system \
--lyaml-cpp \
--lexiv2 \
--lcurl
+# To build:
+make
+
+# To clean:
+make clean
 ```
 - Targeted executing options (Currently not finished)
 ```
