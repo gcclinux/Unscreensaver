@@ -38,7 +38,8 @@ $ make clean
 
 Press ESC or "Q" to exit the Unscreensaver
 ```   
-
+#### ScreenSaver setup example:
+<img src="setup-example.png" alt="Unscreensaver" width="600" height="350"> 
 
 #### ScreenSaver running example:
-<img src="example.png" alt="Unscreensaver" width="600" height="400"> 
+<img src="example.png" alt="Unscreensaver" width="600" height="350"> 

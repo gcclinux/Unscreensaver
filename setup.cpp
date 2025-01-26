@@ -225,5 +225,29 @@ void runSetup() {
         } catch (const std::out_of_range& e) {
             std::cerr << "Error: Number out of range in input fields\n";
         }
+
+        namespace fs = std::filesystem;
+
+        try {
+            fs::path parentDir(inputs[0].toAnsiString());
+            fs::path searchPatternDir = parentDir / inputs[7].toAnsiString();
+
+            if (!fs::exists(parentDir)) {
+                if (!fs::create_directories(parentDir)) {
+                    std::cerr << "Failed to create directory: " << parentDir << std::endl;
+                    return;
+                }
+            }
+
+            if (!fs::exists(searchPatternDir)) {
+                if (!fs::create_directories(searchPatternDir)) {
+                    std::cerr << "Failed to create directory: " << searchPatternDir << std::endl;
+                    return;
+                }
+            }
+        } catch (const fs::filesystem_error& e) {
+            std::cerr << "Filesystem error: " << e.what() << std::endl;
+            return;
+        }
     }
 }
