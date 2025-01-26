@@ -9,6 +9,7 @@
 #include <thread>
 #include <chrono>
 #include "headers/help.hpp"
+#include "headers/setup.hpp"
 
 namespace fs = std::filesystem;
 
@@ -27,7 +28,11 @@ int main(int argc, char* argv[]) {
     }
 
     // Check if the config file exists
-    if (!isConfigFileExists()) {
+    if (argc > 1 && argv[1] == std::string("--setup")) {
+        runSetup();
+        return 0;
+    } else if (!isConfigFileExists()) {
+        std::cerr << "Config file does not exist. Run with --setup first." << std::endl;
         return 1;
     } else {
         UnScreenSaverConfig imgConfig;

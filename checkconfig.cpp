@@ -7,8 +7,6 @@ namespace fs = std::filesystem;
 
 bool isConfigFileExists() {
     if (!fs::exists("config.yml")) {
-        std::cerr << "WARNING!!! Config file not found." << std::endl;
-        std::cerr << "RUN: ./unscreensaver --setup" << std::endl;
         return false;
     }
     return true;
@@ -16,8 +14,6 @@ bool isConfigFileExists() {
 
 bool isConfigValid(UnScreenSaverConfig& config) {
     if (!fs::exists("config.yml")) {
-        std::cerr << "WARNING!!! Config file not found." << std::endl;
-        std::cerr << "RUN: ./unscreensaver --setup" << std::endl;
         return false;
     }
 

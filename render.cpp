@@ -9,7 +9,6 @@
 #include "headers/help.hpp"
 #include "headers/readconfig.hpp"
 #include "headers/pictures.hpp" 
-#include "headers/setup.hpp"
 #include <unordered_set>
 
 namespace fs = std::filesystem;
@@ -81,10 +80,6 @@ int RenderImage(int argc, char* argv[]) {
         std::string arg = argv[i];
         if (arg == "--help") {
             std::cout << getHelpText();
-            return 0;
-        }
-        if (arg == "--setup") {
-            runSetup();
             return 0;
         }
         if ((arg == "--colour" || arg == "--color") && i + 1 < argc) {

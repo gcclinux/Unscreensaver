@@ -2,6 +2,7 @@
 #include <yaml-cpp/yaml.h>
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 
 void saveConfig(const std::string& folderPath, int width, int height, int quantify, int duration, const std::string& accessKey, const std::string& secretKey, const std::string& searchPattern) {
     YAML::Emitter out;
@@ -30,7 +31,7 @@ void saveConfig(const std::string& folderPath, int width, int height, int quanti
 }
 
 void runSetup() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Setup Config");
+    sf::RenderWindow window(sf::VideoMode(800, 450), "Setup Config");
     window.setKeyRepeatEnabled(true);
 
     sf::Font font;
@@ -39,12 +40,28 @@ void runSetup() {
         return;
     }
 
-    // Load existing config
+    // Load or create config
     YAML::Node config;
     try {
-        config = YAML::LoadFile("config.yml");
+        if (std::filesystem::exists("config.yml")) {
+            config = YAML::LoadFile("config.yml");
+        } else {
+            // Create default config
+            config["caching_folder"]["path"] = "";
+            config["image_processing"]["width"] = 512;
+            config["image_processing"]["height"] = 384;
+            config["image_processing"]["quantify"] = 50;
+            config["image_processing"]["duration"] = 5;
+            config["unsplash"]["access_key"] = "";
+            config["unsplash"]["secret_key"] = "";
+            config["unsplash"]["search_pattern"] = "";
+
+            // Save default config
+            std::ofstream fout("config.yml");
+            fout << YAML::Dump(config);
+        }
     } catch (const YAML::Exception& e) {
-        std::cerr << "Error loading config: " << e.what() << std::endl;
+        std::cerr << "Error with config: " << e.what() << std::endl;
     }
 
     // Input fields
@@ -61,8 +78,8 @@ void runSetup() {
 
     // Labels
     std::vector<std::string> labels = {
-        "Folder Path:", "Width:", "Height:", "Quantify:",
-        "Duration:", "Access Key:", "Secret Key:", "Search Pattern:"
+        "Folder Path:", "Image Width:", "Image Height:", "Number of Images:",
+        "Sleep Time (sec):", "Unleash Key:", "Unleash Secret:", "Search Pattern:"
     };
 
     std::vector<sf::Text> labelTexts;
@@ -93,6 +110,27 @@ void runSetup() {
     }
 
     int activeField = -1;
+
+    // Add cursor variables
+    sf::RectangleShape cursor(sf::Vector2f(2, 25));  // 2px wide, 25px tall
+    cursor.setFillColor(sf::Color::Black);
+    sf::Clock cursorClock;
+    bool showCursor = true;
+
+    // Create OK button
+    sf::RectangleShape okButton(sf::Vector2f(100, 40));
+    okButton.setPosition(350, 380); // Centered at bottom
+    okButton.setFillColor(sf::Color(220, 220, 220)); // Light gray
+    okButton.setOutlineColor(sf::Color::Black);
+    okButton.setOutlineThickness(2);
+
+    sf::Text okText("OK", font, 20);
+    okText.setFillColor(sf::Color::Black);
+    // Center text in button
+    okText.setPosition(
+        okButton.getPosition().x + (okButton.getSize().x - okText.getGlobalBounds().width) / 2,
+        okButton.getPosition().y + (okButton.getSize().y - okText.getGlobalBounds().height) / 2 - 5 
+    );
 
     while (window.isOpen()) {
         sf::Event event;
@@ -126,6 +164,23 @@ void runSetup() {
                 }
                 inputTexts[activeField].setString(inputs[activeField]);
             }
+
+            // Handle OK button
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            bool isHovering = okButton.getGlobalBounds().contains(mousePos.x, mousePos.y);
+            
+            // Change button color on hover
+            okButton.setFillColor(isHovering ? sf::Color(200, 200, 200) : sf::Color(220, 220, 220));
+
+            if (event.type == sf::Event::MouseButtonPressed && isHovering) {
+                window.close();
+            }
+        }
+
+        // Update cursor blink
+        if (cursorClock.getElapsedTime().asSeconds() > 0.5f) {
+            showCursor = !showCursor;
+            cursorClock.restart();
         }
 
         window.clear(sf::Color::White);
@@ -135,7 +190,19 @@ void runSetup() {
             window.draw(inputBoxes[i]);
             window.draw(labelTexts[i]);
             window.draw(inputTexts[i]);
+
+            // Draw cursor if this is active field
+            if (i == activeField && showCursor) {
+                float cursorX = inputTexts[i].getPosition().x + 
+                              inputTexts[i].getGlobalBounds().width;
+                cursor.setPosition(cursorX, inputTexts[i].getPosition().y);
+                window.draw(cursor);
+            }
         }
+
+        // Draw button
+        window.draw(okButton);
+        window.draw(okText);
 
         window.display();
     }
