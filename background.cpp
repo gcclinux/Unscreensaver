@@ -19,7 +19,7 @@ void backgroundDownloadLoop(const UnScreenSaverConfig& imgConfig, const std::str
         }
 
         // Check if the number of images is less than imgConfig.quantify
-        if (imageCount < imgConfig.quantify) {
+        if (imageCount < imgConfig.quantify && imageCount < 50) {
             if (isAccessKeyValid()) {
                 downloadImageFromUnsplash();
             } else {
