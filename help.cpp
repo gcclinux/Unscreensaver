@@ -10,6 +10,7 @@ std::string getHelpText() {
     helpText << "Usage: ./screensaver [OPTIONS]\n\n"
              << "Options:\n"
              << "  --help                Show this help message\n"
+             << "  --setup               Create / Update config.yml\n"
              << "  --colour COLOR        Set background color (default: Black)\n"
              << "  --color COLOR         Same as --colour\n\n"
              << "\nAvailable colors:\n";
