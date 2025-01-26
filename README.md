@@ -37,4 +37,8 @@ $ make clean
 ./unscreensaver --color Black   # The same as --colour
 
 Press ESC or "Q" to exit the Unscreensaver
-```
+```   
+
+
+#### ScreenSaver running example:
+<img src="example.png" alt="Unscreensaver" width="600" height="400"> 
